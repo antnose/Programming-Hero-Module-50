@@ -1,5 +1,27 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import auth from "../../firebase.init";
+import { useState } from "react";
+
 const SignUp = () => {
-  const handleSignup = () => {};
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleSignup = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    // console.log(name, email);
+
+    // reset error status
+    setErrorMessage("");
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        console.log(res.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        setErrorMessage(error.message);
+      });
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
@@ -33,6 +55,7 @@ const SignUp = () => {
             Sign Up
           </button>
         </form>
+        {errorMessage && <p className="text-red-600"> {errorMessage} </p>}
       </div>
     </div>
   );
