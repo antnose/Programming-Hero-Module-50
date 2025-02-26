@@ -3,6 +3,7 @@ import auth from "../../firebase.init";
 import { useState } from "react";
 
 const SignUp = () => {
+  const [success, setSuccess] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const handleSignup = (e) => {
     e.preventDefault();
@@ -10,16 +11,26 @@ const SignUp = () => {
     const password = e.target.password.value;
     // console.log(name, email);
 
+    if (password.length <= 8) {
+      setErrorMessage("Password should be 8 character or more");
+      return;
+    }
+
     // reset error status
     setErrorMessage("");
+    setSuccess(false);
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
         console.log(res.user);
+        e.target.email.value = "";
+        e.target.password.value = "";
+        setSuccess(true);
       })
       .catch((error) => {
         console.log(error.message);
         setErrorMessage(error.message);
+        setSuccess(false);
       });
   };
 
@@ -56,6 +67,7 @@ const SignUp = () => {
           </button>
         </form>
         {errorMessage && <p className="text-red-600"> {errorMessage} </p>}
+        {success && <p className="text-green-600 ">Signup is successful</p>}
       </div>
     </div>
   );
