@@ -1,15 +1,24 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import auth from "../../firebase.init";
 import { useState } from "react";
+import { FaEyeSlash } from "react-icons/fa";
+import { BsFillEyeFill } from "react-icons/bs";
 
 const SignUp = () => {
   const [success, setSuccess] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [show, setShow] = useState(false);
   const handleSignup = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    // console.log(name, email);
+    const terms = e.target.terms.checked;
+    console.log(name, email, terms);
+
+    if (!terms) {
+      setErrorMessage("Please accept our terms and condition");
+      return;
+    }
 
     if (password.length <= 8) {
       setErrorMessage("Password should be 8 character or more");
@@ -41,7 +50,7 @@ const SignUp = () => {
         <form onSubmit={handleSignup} className="space-y-4">
           <div className="relative">
             <input
-              type="email"
+              type="text"
               name="email"
               placeholder="Enter your email"
               required
@@ -51,12 +60,26 @@ const SignUp = () => {
 
           <div className="relative">
             <input
-              type="password"
+              type={show ? "text" : "password"}
               name="password"
               placeholder="Create a password"
               required
               className="w-full p-3 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
+            <button
+              onClick={() => setShow(!show)}
+              className="btn btn-xs absolute right-3 mt-3 "
+            >
+              {show ? <FaEyeSlash /> : <BsFillEyeFill />}
+            </button>
+            <div className="form-control mt-4 ">
+              <label className="label cursor-pointer">
+                <input name="terms" type="checkbox" className="checkbox" />
+                <span className="label-text">
+                  Accept our terms and condition
+                </span>
+              </label>
+            </div>
           </div>
 
           <button
