@@ -18,66 +18,79 @@ const Register = () => {
   };
 
   return (
-    <div className="justify-center max-w-lg mx-auto ">
-      <h2 className="text-4xl my-8 ">Register</h2>
-      <form onSubmit={handleRegister}>
-        <label className="input validator">
-          <svg
-            className="h-[1em] opacity-50"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <g
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth="2.5"
-              fill="none"
-              stroke="currentColor"
-            >
-              <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-            </g>
-          </svg>
-          <input
-            name="email"
-            type="email"
-            placeholder="mail@site.com"
-            required
-          />
-        </label>
-        <div className="validator-hint hidden">Enter valid email address</div>
+    <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
+      <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded-lg shadow-lg">
+        <h2 className="text-3xl font-bold text-center">Register</h2>
+        <form onSubmit={handleRegister} className="space-y-4">
+          <div>
+            <label className="block mb-2 text-sm font-medium">Email</label>
+            <div className="relative">
+              <input
+                type="email"
+                name="email"
+                placeholder="mail@site.com"
+                required
+                className="w-full p-3 pl-10 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+              <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                <svg
+                  className="h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+              </span>
+            </div>
+          </div>
 
-        <br />
+          <div>
+            <label className="block mb-2 text-sm font-medium">Password</label>
+            <div className="relative">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                className="w-full p-3 pl-10 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+              <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                <svg
+                  className="h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path>
+                  <circle
+                    cx="16.5"
+                    cy="7.5"
+                    r=".5"
+                    fill="currentColor"
+                  ></circle>
+                </svg>
+              </span>
+            </div>
+          </div>
 
-        <label className="input validator my-8 ">
-          <svg
-            className="h-[1em] opacity-50"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
+          <button
+            type="submit"
+            className="w-full p-3 font-semibold text-center text-black bg-blue-500 rounded-lg hover:bg-blue-600"
           >
-            <g
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth="2.5"
-              fill="none"
-              stroke="currentColor"
-            >
-              <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path>
-              <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
-            </g>
-          </svg>
-          <input
-            name="password"
-            type="password"
-            required
-            placeholder="Password"
-          />
-        </label>
-        <br />
-        <button className="btn bg-black text-white border-black">
-          Login with GitHub
-        </button>
-      </form>
+            Register
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
