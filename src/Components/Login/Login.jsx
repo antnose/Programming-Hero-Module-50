@@ -1,17 +1,22 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import auth from "../../firebase.init";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function LoginPage() {
   const [success, setSuccess] = useState(false);
   const [loginError, setLoginError] = useState("");
 
+  const emailRef = useRef();
+
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(name, password);
+    // console.log(name, password);
 
     // reset status
     setSuccess(false);
@@ -20,13 +25,28 @@ export default function LoginPage() {
     // login user
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
-        console.log(result.user);
-        setSuccess(true);
+        if (!result.user.emailVerified) {
+          setLoginError("Please verify your email address");
+        } else {
+          setSuccess(true);
+        }
       })
       .catch((error) => {
         console.log("Error", error.message);
         setLoginError(error.message);
       });
+  };
+
+  const handleResetPassword = () => {
+    // console.log(emailRef.current.value);
+    const email = emailRef.current.value;
+    if (!email) {
+      setLoginError("Please enter your mail");
+    } else {
+      sendPasswordResetEmail(auth, email).then(() => {
+        alert("Reset email send in your mail address. Please check your email");
+      });
+    }
   };
 
   return (
@@ -41,6 +61,7 @@ export default function LoginPage() {
             <input
               name="email"
               type="email"
+              ref={emailRef}
               className="w-full p-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Enter your email"
               required
@@ -66,7 +87,12 @@ export default function LoginPage() {
 
         {success && <p className="text-green-600">User login successful!</p>}
         {loginError && <p className="text-red-600"> {loginError} </p>}
-
+        <p
+          onClick={handleResetPassword}
+          className="my-3 hover:underline cursor-pointer"
+        >
+          Forget Password
+        </p>
         <p>
           New to this website please <Link to="/signup">Sign Up</Link>
         </p>
