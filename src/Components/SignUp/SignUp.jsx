@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  updateProfile,
 } from "firebase/auth";
 import auth from "../../firebase.init";
 import { useState } from "react";
@@ -14,10 +15,12 @@ const SignUp = () => {
   const [show, setShow] = useState(false);
   const handleSignup = (e) => {
     e.preventDefault();
+    const name = e.target.name.value;
+    const photo = e.target.photo.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
     const terms = e.target.terms.checked;
-    console.log(name, email, terms);
+    // console.log(name, photo, email, terms);
 
     if (!terms) {
       setErrorMessage("Please accept our terms and condition");
@@ -50,6 +53,20 @@ const SignUp = () => {
         setErrorMessage(error.message);
         setSuccess(false);
       });
+
+    // update profile information
+    const profile = {
+      displayName: name,
+      photoURL: photo,
+    };
+
+    updateProfile(auth.currentUser, profile)
+      .then(() => {
+        console.log("User profile updated");
+      })
+      .catch(() => {
+        console.log(`You can't update your profile now! Sorry :( `);
+      });
   };
 
   return (
@@ -60,8 +77,28 @@ const SignUp = () => {
           <div className="relative">
             <input
               type="text"
+              name="name"
+              placeholder="Enter your Full Name"
+              required
+              className="w-full p-3 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="relative">
+            <input
+              type="text"
               name="email"
               placeholder="Enter your email"
+              required
+              className="w-full p-3 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="relative">
+            <input
+              type="text"
+              name="photo"
+              placeholder="Enter your photo url"
               required
               className="w-full p-3 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
